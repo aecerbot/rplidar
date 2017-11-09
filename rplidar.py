@@ -187,12 +187,12 @@ class RPLidar(object):
                 return
 
             except (serial.SerialTimeoutException, serial.SerialException) as e:
-                self._connection.disconnect()
-                self._connection.connect()
+                self.disconnect()
+                self.connect()
                 time.sleep(0.010)
                 tries -= 1
 
-        self._connection.disconnect()
+        self.disconnect()
         raise RPLidarException('Failed to send command: %s %s' % (req, e))
 
     def _send_payload_cmd(self, cmd, payload):
@@ -222,12 +222,12 @@ class RPLidar(object):
                 return self._connection.read(length)
 
             except (serial.SerialTimeoutException, serial.SerialException) as e:
-                self._connection.disconnect()
-                self._connection.connect()
+                self.disconnect()
+                self.connect()
                 time.sleep(0.010)
                 tries -= 1
 
-        self._connection.disconnect()
+        self.disconnect()
         raise RPLidarException('Failed to read %d bytes: %s' % (length, e))
 
     def _read_descriptor(self):
