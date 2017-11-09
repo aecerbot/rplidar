@@ -168,6 +168,7 @@ class RPLidar(object):
         # For A2
         self.set_pwm(0)
         time.sleep(.001)
+
         # For A1
         self._connection.dtr = True
         self.motor_running = False
@@ -183,6 +184,7 @@ class RPLidar(object):
             try:
                 self._connection.write(req)
                 self.logger.debug('Command sent: %s' % req)
+                return
 
             except (serial.SerialTimeoutException, serial.SerialException) as e:
                 self._connection.disconnect()
