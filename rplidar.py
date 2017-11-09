@@ -125,7 +125,8 @@ class RPLidar(object):
         if self._connection is not None:
             self.disconnect()
 
-        tries = 3
+        tries = 10
+        sleep = 0.001
         message = '(unknown error)'
         while tries:
             try:
@@ -137,7 +138,8 @@ class RPLidar(object):
 
             except serial.SerialException as err:
                 message = str(err)
-                time.sleep(0.010)
+                time.sleep(sleep)
+                sleep *= 2
                 tries -= 1
 
         self.disconnect()
