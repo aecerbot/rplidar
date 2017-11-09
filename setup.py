@@ -5,13 +5,13 @@ except ImportError:
     from distutils.core import setup
 
 setup(
-    name = 'rplidar',
-    py_modules = ['rplidar'],
-    version = '0.9.2',
+    name = 'aerplidar',
+    py_modules = ['aerplidar'],
+    version = '0.0.1',
     description = 'Simple and lightweight module for working with RPLidar laser scanners',
-    author='Artyom Pavlov',
-    author_email='newpavlov@gmail.com',
-    url='https://github.com/SkRobo/rplidar',
+    author='Artyom Pavlov, Roger Donaldson',
+    author_email='roger@aecerbot.ca',
+    url='https://github.com/aecerbot/rplidar',
     license='MIT',
     install_requires=['pyserial'],
     zip_safe=True,
