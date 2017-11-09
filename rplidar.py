@@ -126,6 +126,7 @@ class RPLidar(object):
             self.disconnect()
 
         tries = 3
+        message = '(unknown error)'
         while tries:
             try:
                 self._connection = serial.Serial(
@@ -135,11 +136,12 @@ class RPLidar(object):
                 return
 
             except serial.SerialException as err:
+                message = str(err)
                 time.sleep(0.010)
                 tries -= 1
 
         self.disconnect()
-        raise RPLidarException('Failed to connect to the sensor due to: %s' % err)
+        raise RPLidarException('Failed to connect to the sensor due to: %s' % message)
 
     def disconnect(self):
         '''Disconnects from the serial port'''
@@ -180,6 +182,7 @@ class RPLidar(object):
 
         # try to send
         tries = 3
+        message = '(unknown error)'
         while tries:
             try:
                 self._connection.write(req)
@@ -187,13 +190,14 @@ class RPLidar(object):
                 return
 
             except (serial.SerialTimeoutException, serial.SerialException) as e:
+                message = str(e)
                 self.disconnect()
                 self.connect()
                 time.sleep(0.010)
                 tries -= 1
 
         self.disconnect()
-        raise RPLidarException('Failed to send command: %s %s' % (req, e))
+        raise RPLidarException('Failed to send command: %s %s' % (req, message))
 
     def _send_payload_cmd(self, cmd, payload):
         '''Sends `cmd` command with `payload` to the sensor'''
@@ -217,18 +221,20 @@ class RPLidar(object):
 
         # try to send
         tries = 3
+        message = '(unknown error)'
         while tries:
             try:
                 return self._connection.read(length)
 
             except (serial.SerialTimeoutException, serial.SerialException) as e:
+                message = str(e)
                 self.disconnect()
                 self.connect()
                 time.sleep(0.010)
                 tries -= 1
 
         self.disconnect()
-        raise RPLidarException('Failed to read %d bytes: %s' % (length, e))
+        raise RPLidarException('Failed to read %d bytes: %s' % (length, message))
 
     def _read_descriptor(self):
         '''Reads descriptor packet'''
