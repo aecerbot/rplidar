@@ -158,6 +158,9 @@ class RPLidar(object):
     def start_motor(self):
         '''Starts sensor motor'''
         self.logger.info('Starting motor')
+
+        self.connect()
+
         # For A1
         self._connection.dtr = False
 
@@ -170,6 +173,7 @@ class RPLidar(object):
     def stop_motor(self):
         '''Stops sensor motor'''
         self.logger.info('Stopping motor')
+
         # For A2
         self.set_pwm(0)
         time.sleep(0.001)
