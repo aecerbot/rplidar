@@ -148,6 +148,7 @@ class RPLidar(object):
         if self._connection is None:
             return
         self._connection.close()
+        self._connection = None
 
     def set_pwm(self, pwm):
         assert(0 <= pwm <= MAX_MOTOR_PWM)
@@ -164,12 +165,14 @@ class RPLidar(object):
         self.set_pwm(DEFAULT_MOTOR_PWM)
         self.motor_running = True
 
+        time.sleep(0.001)
+
     def stop_motor(self):
         '''Stops sensor motor'''
         self.logger.info('Stopping motor')
         # For A2
         self.set_pwm(0)
-        time.sleep(.001)
+        time.sleep(0.001)
 
         # For A1
         self._connection.dtr = True
