@@ -362,7 +362,7 @@ class RPLidar(object):
             Measured object distance related to the sensor's rotation center.
             In millimeter unit. Set to 0 when measurment is invalid.
         '''
-        self.start_motor()
+        #self.start_motor()
         status, error_code = self.get_health()
         self.logger.debug('Health status: %s [%d]', status, error_code)
         if status == _HEALTH_STATUSES[2]:
